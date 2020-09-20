@@ -11,7 +11,7 @@ class UntitledTestCase(unittest.TestCase):
     def test_untitled_test_case(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.autorization(wd)
+        self.autorization(wd, login="admin", password="secret")
         self.add_new_user_in_addressbook(wd)
         self.fill_in_form(wd)
         self.return_homepage(wd)
@@ -74,13 +74,13 @@ class UntitledTestCase(unittest.TestCase):
     def add_new_user_in_addressbook(self, wd):
         wd.find_element_by_link_text("add new").click()
 
-    def autorization(self, wd):
+    def autorization(self, wd, login="admin", password="secret"):
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys("%s" % login)
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_name("pass").send_keys("%s" % password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self, wd):
