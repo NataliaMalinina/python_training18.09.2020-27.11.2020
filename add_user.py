@@ -10,15 +10,20 @@ class UntitledTestCase(unittest.TestCase):
     
     def test_untitled_test_case(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-        wd.find_element_by_link_text("add new").click()
+        self.open_home_page(wd)
+        self.autorization(wd)
+        self.add_new_user_in_addressbook(wd)
+        self.fill_in_form(wd)
+        self.return_homepage(wd)
+        self.log_out(wd)
+
+    def log_out(self, wd):
+        wd.find_element_by_link_text("Logout").click()
+
+    def return_homepage(self, wd):
+        wd.find_element_by_link_text("home page").click()
+
+    def fill_in_form(self, wd):
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("Iona")
         wd.find_element_by_name("middlename").clear()
@@ -65,12 +70,24 @@ class UntitledTestCase(unittest.TestCase):
         Select(wd.find_element_by_name("amonth")).select_by_visible_text("October")
         Select(wd.find_element_by_name("new_group")).select_by_visible_text("[none]")
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        wd.find_element_by_link_text("home page").click()
-        wd.find_element_by_link_text("Logout").click()
+
+    def add_new_user_in_addressbook(self, wd):
+        wd.find_element_by_link_text("add new").click()
+
+    def autorization(self, wd):
+        wd.find_element_by_name("user").click()
+        wd.find_element_by_name("user").clear()
+        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("pass").click()
+        wd.find_element_by_name("pass").clear()
+        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_xpath("//input[@value='Login']").click()
+
+    def open_home_page(self, wd):
+        wd.get("http://localhost/addressbook/")
 
     def tearDown(self):
         self.wd.quit()
-        self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
     unittest.main()
