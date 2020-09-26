@@ -12,12 +12,12 @@ def app(request):
 
 
 def test_address_group(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_group(Group(name=u"Университет", header=u"Кафедра №1", footer=u"Кафедра №2"))
-    app.logout()
+    app.session.logout()
 
 def test_add_empty_group(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_group(Group(name=u" ", header=u" ", footer=u" "))
-    app.logout()
+    app.session.logout()
 
