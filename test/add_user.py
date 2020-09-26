@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from application import Application
-from application import Parameters
+from fixture.application import Application
+from model.params_for_user import Parameters
 
 @pytest.fixture
 def app(request):
