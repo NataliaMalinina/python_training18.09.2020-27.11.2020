@@ -14,6 +14,7 @@ class Application:
         self.add_user = UserHelper(self)
         #self.wd = Select(self)
 
+
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
