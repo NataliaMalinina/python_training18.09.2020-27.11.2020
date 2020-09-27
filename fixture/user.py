@@ -72,6 +72,14 @@ class UserHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.return_homepage()
 
+    def del_user(self):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.open_home_page()
+
     def return_homepage(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()

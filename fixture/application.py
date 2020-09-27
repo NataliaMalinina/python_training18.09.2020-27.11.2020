@@ -2,7 +2,7 @@ from selenium import webdriver
 #from selenium.webdriver.support.ui import Select
 from fixture.session import SessionHelper
 from fixture.group_1 import GroupHelper
-from fixture.add_user import UserHelper
+from fixture.user import UserHelper
 
 class Application:
 
@@ -11,7 +11,7 @@ class Application:
         self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
         self.group_1 = GroupHelper(self)
-        self.add_user = UserHelper(self)
+        self.user = UserHelper(self)
         #self.wd = Select(self)
 
 
