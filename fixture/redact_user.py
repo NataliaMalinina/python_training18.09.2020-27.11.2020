@@ -1,6 +1,6 @@
 from selenium.webdriver.support.ui import Select
 
-class UserHelper:
+class UserHelperredact:
 
     def __init__(self, app):
         self.app = app
@@ -9,13 +9,11 @@ class UserHelper:
         wd = self.app.wd
         wd.get("http://localhost/addressbook/")
 
-    def add_new_user_in_addressbook(self):
+    def edit_user(self, Parameters):
         wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
-
-    def fill_in_form(self, Parameters):
-        wd = self.app.wd
-        self.add_new_user_in_addressbook()
+        self.open_home_page()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys("%s" % Parameters.firstname)
         wd.find_element_by_name("middlename").clear()
@@ -38,17 +36,8 @@ class UserHelper:
         wd.find_element_by_name("address").send_keys("%s" % Parameters.address)
         Select(wd.find_element_by_name("bday")).select_by_visible_text("%s" % Parameters.bday)
         Select(wd.find_element_by_name("bmonth")).select_by_visible_text("%s" % Parameters.bmonth)
-        Select(wd.find_element_by_name("new_group")).select_by_visible_text("%s" % Parameters.new_group)
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.return_homepage()
-
-    def del_user(self):
-        wd = self.app.wd
-        self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//input[@value='Delete']").click()
-        wd.switch_to_alert().accept()
-        self.open_home_page()
 
     def return_homepage(self):
         wd = self.app.wd
