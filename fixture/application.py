@@ -7,7 +7,7 @@ class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
+        self.wd.implicitly_wait(15)
         self.session = SessionHelper(self)
         self.group_1 = GroupHelper(self)
         self.user = UserHelper(self)
@@ -19,11 +19,9 @@ class Application:
         except:
             return False
 
-
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
-
 
     def destroy(self):
         self.wd.quit()
