@@ -7,3 +7,4 @@ def test_edit_user(app):
         company="Calhoun Carter Trading", address="Distinctio Amet no", home="Cillum veniam eveni",
         mobile="Dolor sint perspicia", work="Voluptas voluptatibu", email="giwige@mailinator.net",
         byear="2000", bday="5", bmonth="September", new_group="[none]")))
+
