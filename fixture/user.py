@@ -7,7 +7,11 @@ class UserHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.get("http://localhost/addressbook/")
+        if not (wd.current_url.endswith("/addressbook/index.php")) or not \
+                (wd.current_url.endswith("/addressbook/")):
+            wd.find_element_by_link_text("home").click()
+        # wd = self.app.wd
+        # wd.get("http://localhost/addressbook/")
 
     def add_new_user_in_addressbook(self):
         wd = self.app.wd
