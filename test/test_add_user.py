@@ -11,7 +11,7 @@ def test_add_user(app):
                               # byear="2006", bday="26", bmonth="July", new_group="[none]")
     app.user.fill(user)
     new_user = app.user.get_user_list()
-    assert len(old_user) + 1 == len(new_user)
+    assert len(old_user) + 1 == app.user.count()
     old_user.append(user)
     assert sorted(old_user, key=Parameters.id_or_max) == sorted(new_user, key=Parameters.id_or_max)
 

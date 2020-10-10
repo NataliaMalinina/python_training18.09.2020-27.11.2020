@@ -23,6 +23,7 @@ class UserHelper:
         self.fill_in_form_user(parameters)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_homepage()
+        self.user_cache = None
 
     def edit_user(self, parameters):
         wd = self.app.wd
@@ -32,6 +33,7 @@ class UserHelper:
         self.fill_in_form_user(parameters)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.return_homepage()
+        self.user_cache = None
 
     def selected_user(self):
         wd = self.app.wd
@@ -44,6 +46,7 @@ class UserHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.open_home_page()
+        self.user_cache = None
 
     def return_homepage(self):
         wd = self.app.wd
@@ -82,12 +85,15 @@ class UserHelper:
         if text is not None:
             Select(wd.find_element_by_name(field_name)).select_by_value(text)
 
+    user_cache = None
+
     def get_user_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        users = []
-        for element in wd.find_elements_by_name("entry"):
-            lastname, firstname = element.text.split(" ")
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            users.append(Parameters(firstname=firstname, lastname=lastname, id=id))
-        return users
+        if self.user_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.user_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                lastname, firstname = element.text.split(" ")
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.user_cache.append(Parameters(firstname=firstname, lastname=lastname, id=id))
+        return list(self.user_cache)
