@@ -25,10 +25,13 @@ class UserHelper:
         self.return_homepage()
         self.user_cache = None
 
-    def edit_user(self, parameters):
+    def edit_user(self):
+        self.edit_user_by_index(0)
+
+    def edit_user_by_index(self, index, parameters):
         wd = self.app.wd
         self.open_home_page()
-        self.selected_user()
+        self.selected_user_by_index(index)
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_in_form_user(parameters)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
@@ -39,10 +42,17 @@ class UserHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    def selected_user_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def del_user(self):
+        self.del_user_by_index(0)
+
+    def del_user_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        self.selected_user()
+        self.selected_user_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.open_home_page()
