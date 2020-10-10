@@ -87,7 +87,7 @@ class UserHelper:
         self.open_home_page()
         users = []
         for element in wd.find_elements_by_name("entry"):
-            text = element.text
+            lastname, firstname = element.text.split(" ")
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            users.append(Parameters(firstname=text, middlename=text, id=id))
+            users.append(Parameters(firstname=firstname, lastname=lastname, id=id))
         return users
