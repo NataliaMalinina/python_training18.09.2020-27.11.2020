@@ -2,7 +2,7 @@
 class Parameters:
     def __init__(self, firstname=None, middlename=None, lastname=None,
                  company=None, address=None, home=None, mobile=None, work=None, email=None,
-                 byear=None, bday=None, bmonth=None, new_group=None):
+                 byear=None, bday=None, bmonth=None, new_group=None, id=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -16,3 +16,4 @@ class Parameters:
         self.bday = bday
         self.bmonth = bmonth
         self.new_group = new_group
+        self.id = id

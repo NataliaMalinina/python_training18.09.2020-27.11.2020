@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import Select
+from model.params_for_user import Parameters
 
 class UserHelper:
 
@@ -81,3 +82,12 @@ class UserHelper:
         if text is not None:
             Select(wd.find_element_by_name(field_name)).select_by_value(text)
 
+    def get_user_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        users = []
+        for element in wd.find_elements_by_name("entry"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            users.append(Parameters(firstname=text, middlename=text, id=id))
+        return users

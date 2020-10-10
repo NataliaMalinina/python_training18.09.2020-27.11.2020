@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from model.group import Group
 
+from model.group import Group
 
 
 def test_address_group(app):
