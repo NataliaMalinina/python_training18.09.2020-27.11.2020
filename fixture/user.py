@@ -31,7 +31,6 @@ class UserHelper:
     def edit_user_by_index(self, index, parameters):
         wd = self.app.wd
         self.open_home_page()
-        self.selected_user_by_index(index)
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_in_form_user(parameters)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
