@@ -1,69 +1,30 @@
-# -*- coding: utf-8 -*-
-from selenium import webdriver
-import unittest
+##перебор всех значение нейм, хэдэр, футер
 from model.group import Group
+import pytest
+import random
+import string
 
-class TestAddGroup(unittest.TestCase):
-    def setUp(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(30)
 
-    
-    def test_add_group(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.open_group_page(wd)
-        self.create_group(wd, Group(name=u"Енгагмент", header=u"Олег", footer=u"Ольга"))
-        self.return_groups_page(wd)
-        self.logout(wd)
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters + string.digits + " "*10
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
-    def test_add_empty_group(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.open_group_page(wd)
-        self.create_group(wd, Group(name=u" ", header=u" ", footer=u" "))
-        self.return_groups_page(wd)
-        self.logout(wd)
 
-    def logout(self, wd):
-        wd.find_element_by_link_text("Logout").click()
+testdata = [
+    Group(name=name, header=header, footer=footer)
+    for name in ["", random_string("name", 10)]
+    for header in ["", random_string("header", 20)]
+    for footer in ["", random_string("footer", 15)]
+]
 
-    def return_groups_page(self, wd):
-        wd.find_element_by_link_text("group page").click()
 
-    def create_group(self, wd, group):
-        # init group creation
-        wd.find_element_by_name("new").click()
-        # fill group firm
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(u"%s" % group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(u"%s" % group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(u"%s" % group.footer)
-        # submit group creation
-        wd.find_element_by_name("submit").click()
+@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+def test_address_group(app, group):
+        old_groups = app.group_1.get_group_list()
+        app.group_1.create(group)
+        assert len(old_groups) + 1 == app.group_1.count()
+        new_groups = app.group_1.get_group_list()
+        old_groups.append(group)
+        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
-    def open_group_page(self, wd):
-        wd.find_element_by_link_text("groups").click()
 
-    def login(self, wd, username, password):
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("%s" % username)
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("%s" % password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-
-    def open_home_page(self, wd):
-        wd.get("http://localhost/addressbook/")
-
-    def tearDown(self):
-        self.wd.quit()
-
-if __name__ == "__main__":
-    unittest.main()

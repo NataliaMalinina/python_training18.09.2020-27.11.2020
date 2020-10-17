@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
 
 from model.group import Group
+import pytest
+import random
+import string
 
 
-def test_address_group(app):
-    old_groups = app.group_1.get_group_list()
-    group = Group(name="Университет", header="Кафедра №1", footer="Кафедра №2")
-    app.group_1.create(group)
-    assert len(old_groups) + 1 == app.group_1.count()
-    new_groups = app.group_1.get_group_list()
-    old_groups.append(group)
-    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-# def test_add_empty_group(app):
-#     old_groups = app.group_1.get_group_list()
-#     group = Group(name="", header="", footer="")
-#     app.group_1.create(group)
-#     new_groups = app.group_1.get_group_list()
-#     assert len(old_groups) + 1 == len(new_groups)
-#     old_groups.append(group)
-#     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+testdata = [Group(name="", header="", footer="")] + [
+    Group(name=random_string("name", 10), header=random_string("header", 20), footer=random_string("footer", 15))
+    for i in range(5)
+]
+
+
+@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+def test_address_group(app, group):
+        old_groups = app.group_1.get_group_list()
+        app.group_1.create(group)
+        assert len(old_groups) + 1 == app.group_1.count()
+        new_groups = app.group_1.get_group_list()
+        old_groups.append(group)
+        assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
