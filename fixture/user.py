@@ -88,6 +88,7 @@ class UserHelper:
         self.change_field_value("home", parameters.home)
         self.change_field_value("mobile", parameters.mobile)
         self.change_field_value("work", parameters.work)
+        self.change_field_value("phone2", parameters.phone2)
         self.change_field_value("email", parameters.email)
         self.change_field_value("byear", parameters.byear)
         self.change_field_value("address", parameters.address)
@@ -116,9 +117,9 @@ class UserHelper:
                 firstname = cells[2].text
                 lastname = cells[1].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                all_phones = cells[5].text.splitlines()
+                all_phones = cells[5].text
                 self.user_cache.append(Parameters(firstname=firstname, lastname=lastname, id=id,
-                                                  home=all_phones[0], mobile=all_phones[1], work=all_phones[2]))
+                                                  all_phones_from_home_page=all_phones))
         return list(self.user_cache)
 
     def get_user_info_from_edit_page(self, index):
@@ -130,7 +131,8 @@ class UserHelper:
         home = wd.find_element_by_name("home").get_attribute("value")
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         work = wd.find_element_by_name("work").get_attribute("value")
-        return Parameters(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work)
+        phone2 = wd.find_element_by_name("phone2").get_attribute("value")
+        return Parameters(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work, phone2=phone2)
 
     def get_user_from_view_page(self, index):
         wd = self.app.wd
@@ -139,8 +141,7 @@ class UserHelper:
         home = re.search("H: (.*)", text).group(1)
         mobile = re.search("M: (.*)", text).group(1)
         work = re.search("W: (.*)", text).group(1)
-        return Parameters(home=home, mobile=mobile, work=work)
-
-
+        work = re.search("P: (.*)", text).group(1)
+        return Parameters(home=home, mobile=mobile, work=work, phone2=phone2)
 
 
