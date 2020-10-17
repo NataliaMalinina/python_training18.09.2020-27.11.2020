@@ -90,6 +90,8 @@ class UserHelper:
         self.change_field_value("work", parameters.work)
         self.change_field_value("phone2", parameters.phone2)
         self.change_field_value("email", parameters.email)
+        self.change_field_value("email2", parameters.email2)
+        self.change_field_value("email3", parameters.email3)
         self.change_field_value("byear", parameters.byear)
         self.change_field_value("address", parameters.address)
         self.select_by_value("bday", parameters.bday)
@@ -118,8 +120,10 @@ class UserHelper:
                 lastname = cells[1].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 all_phones = cells[5].text
+                all_emails = cells[4].text
                 self.user_cache.append(Parameters(firstname=firstname, lastname=lastname, id=id,
-                                                  all_phones_from_home_page=all_phones))
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_emails_from_home_page=all_emails))
         return list(self.user_cache)
 
     def get_user_info_from_edit_page(self, index):
@@ -132,7 +136,11 @@ class UserHelper:
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         work = wd.find_element_by_name("work").get_attribute("value")
         phone2 = wd.find_element_by_name("phone2").get_attribute("value")
-        return Parameters(firstname=firstname, lastname=lastname, id=id, home=home, mobile=mobile, work=work, phone2=phone2)
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        return Parameters(firstname=firstname, lastname=lastname, id=id, home=home,
+                            mobile=mobile, work=work, phone2=phone2, email=email, email2=email2, email3=email3)
 
     def get_user_from_view_page(self, index):
         wd = self.app.wd
