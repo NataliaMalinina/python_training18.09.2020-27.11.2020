@@ -6,9 +6,11 @@ def test_edit_user(app):
         app.user.fill(Parameters(firstname= "тест", bday="0", bmonth="-"))
     old_user = app.user.get_user_list()
     index = randrange(len(old_user))
-    user = Parameters(firstname="Thane", lastname="Snider")  #middlename="Omar Kennedy", lastname="Snider",
-    #     company="Calhoun Carter Trading", address="Distinctio Amet no", home="Cillum veniam eveni",
-    #     mobile="Dolor sint perspicia", work="Voluptas voluptatibu", email="giwige@mailinator.net",
+    user = Parameters(firstname="Thane", lastname="Snider", home="Cillum veniam eveni",
+                      mobile="Dolor sint perspicia", work="Voluptas voluptatibu",)
+    #     middlename="Omar Kennedy", lastname="Snider",
+    #     company="Calhoun Carter Trading", address="Distinctio Amet no",
+    #     email="giwige@mailinator.net",
     #     byear="2000", bday="5", bmonth="September", new_group="[none]")
     user.id = old_user[index].id
     app.user.edit_user_by_index(index, user)
