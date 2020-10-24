@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from model.params_for_user import Parameters
-import pytest
-from data.user_data import testdata
 
 
-@pytest.mark.parametrize("user", testdata, ids=[repr(x) for x in testdata])
-def test_add_user(app, user):
+def test_add_user(app, json_users):
+    user = json_users
     old_user = app.user.get_user_list()
     app.user.fill(user)
     assert len(old_user) + 1 == app.user.count()
