@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.params_for_user import Parameters
 import pytest
-from data.add_user import testdata
+from data.user_data import testdata
 
 
 @pytest.mark.parametrize("user", testdata, ids=[repr(x) for x in testdata])
