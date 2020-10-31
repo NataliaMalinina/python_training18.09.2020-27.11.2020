@@ -27,7 +27,7 @@ def app(request):
     if fixture is None or not fixture.is_valid:
         fixture = Application(browser=browser, base_url=web_config['baseUrl'], login=web_config['username'],
                               password=web_config['password']) #создаём фикстуру если она None или не валидная
-    fixture.session.ensure_login(username=web_config['username'], password=target['password'])
+    fixture.session.ensure_login(username=web_config['username'], password=web_config['password'])
     return fixture
 
 
