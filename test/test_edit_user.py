@@ -1,23 +1,21 @@
 from model.params_for_user import Parameters
-from random import randrange
+import random
 
-def test_edit_user(app):
-    if app.user.count() == 0:
-        app.user.fill(Parameters(firstname= "тест", bday="0", bmonth="-"))
-    old_user = app.user.get_user_list()
-    index = randrange(len(old_user))
-    user = Parameters(firstname="Thane", lastname="Snider", home="Cillum veniam eveni",
-                      mobile="Dolor sint perspicia", work="Voluptas voluptatibu",)
-    #     middlename="Omar Kennedy", lastname="Snider",
-    #     company="Calhoun Carter Trading", address="Distinctio Amet no",
-    #     email="giwige@mailinator.net",
-    #     byear="2000", bday="5", bmonth="September", new_group="[none]")
-    user.id = old_user[index].id
-    app.user.edit_user_by_index(index, user)
-    new_user = app.user.get_user_list()
+
+def test_edit_user(app, db, check_ui):
+    if len(db.get_user_list()) == 0:
+        app.user.fill(Parameters(firstname="тест", bday="0", bmonth="-"))
+    old_user = db.get_user_list()
+    user = random.choice(old_user)
+    app.user.edit_user_by_id(user.id, Parameters(firstname="Thane", lastname="Snider", home="Cillum veniam eveni",
+                                                    mobile="Dolor sint perspicia", work="Voluptas voluptatibu",))
+    new_user = db.get_user_list()
     assert len(old_user) == len(new_user)
-    old_user[index] = user
+    #old_user[index] = user
     assert sorted(old_user, key=Parameters.id_or_max) == sorted(new_user, key=Parameters.id_or_max)
+    if check_ui:
+        assert sorted(new_user, key=Parameters.id_or_max) == sorted(app.user.get_user_list(),
+                                                                         key=Parameters.id_or_max)
 
 
 

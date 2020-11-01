@@ -13,7 +13,6 @@ class UserHelper:
                 (wd.current_url.endswith("/addressbook/")):
             wd.find_element_by_link_text("home").click()
 
-
     def add_new_user_in_addressbook(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
@@ -38,6 +37,15 @@ class UserHelper:
         self.return_homepage()
         self.user_cache = None
 
+    def edit_user_by_id(self, id, parameters):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_link_text("edit.php?id= '%s']"  %id).click()
+        self.fill_in_form_user(parameters)
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.return_homepage()
+        self.user_cache = None
+
     def open_user_to_edit_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
@@ -56,6 +64,10 @@ class UserHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def selected_user_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
     def del_user(self):
         self.del_user_by_index(0)
 
@@ -63,6 +75,15 @@ class UserHelper:
         wd = self.app.wd
         self.open_home_page()
         self.selected_user_by_index(index)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.open_home_page()
+        self.user_cache = None
+
+    def del_user_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.selected_user_by_id(id)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.open_home_page()
