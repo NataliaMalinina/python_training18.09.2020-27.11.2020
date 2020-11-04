@@ -185,13 +185,13 @@ class UserHelper:
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group.name).click()
-        if element in wd.find_elements_by_name("entry"):
-            element.find_elements_by_tag_name("td")
+        if wd.find_elements_by_name("entry"):
+            wd.find_elements_by_tag_name("td")
             wd.find_element_by_name("selected[]").click()
             wd.find_element_by_xpath("//input[@name='remove']").click()
             wd.switch_to_alert().accept()
         else:
-            wd.find_element_by_xpath("//select[@name='group']/option[value()='all']").click()
+            wd.find_element_by_xpath("//select[@name='group']/option[text()='[all]']").click()
             self.open_home_page()
 
 
