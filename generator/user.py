@@ -13,7 +13,7 @@ except getopt.GetoptError as err:
     getopt.usege()
     sys.exit(2)
 
-u = 1
+u = 2
 f = "data/users.json"
 
 for o, a in opts:

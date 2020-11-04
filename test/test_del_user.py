@@ -4,7 +4,7 @@ import random
 
 def test_del_user(app, db, check_ui):
     if len(db.get_user_list()) == 0:
-        app.user.fill(Parameters(firstname= "тест", bday="0", bmonth="-"))
+        app.user.fill(Parameters(firstname="тест", bday="0", bmonth="-"))
     old_user = db.get_user_list()
     user = random.choice(old_user)
     app.user.del_user_by_id(user.id)

@@ -21,7 +21,7 @@ class UserHelper:
         wd = self.app.wd
         self.add_new_user_in_addressbook()
         self.fill_in_form_user(parameters)
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        wd.find_element_by_name("submit").click()
         self.return_homepage()
         self.user_cache = None
 
@@ -40,7 +40,7 @@ class UserHelper:
     def edit_user_by_id(self, id, parameters):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_link_text("edit.php?id= '%s']"  %id).click()
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
         self.fill_in_form_user(parameters)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.return_homepage()

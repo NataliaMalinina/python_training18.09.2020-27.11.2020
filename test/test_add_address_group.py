@@ -12,5 +12,3 @@ def test_address_group(app, db, json_groups, check_ui):
         if check_ui:
                 assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group_1.get_group_list(),
                                                                          key=Group.id_or_max)
-
-
