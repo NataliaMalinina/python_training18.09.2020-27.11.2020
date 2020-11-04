@@ -23,12 +23,12 @@ for o, a in opts:
         f = a
 
 def random_user(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    symbols = string.ascii_letters + string.digits + " "*10    # убрала + string.punctuation
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
 def random_user_digits(prefix, maxlen):
-    symbols = string.digits + string.punctuation + " "*6
+    symbols = string.digits + " "*6   # убрала + string.punctuation
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 

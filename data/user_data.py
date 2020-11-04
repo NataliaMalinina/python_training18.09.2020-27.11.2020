@@ -18,6 +18,6 @@ testdata = [
     lastname=random_user("lastname", 20), company=random_user("company", 25), address=random_user("address", 31),
         home=random_user_digits("home", 13), mobile=random_user_digits("mobile", 12), work=random_user_digits("work", 15),
             phone2=random_user_digits("phone2", 20), email=random_user("email", 34))
-    for i in range(2)
+    for i in range(3)
 ]
 

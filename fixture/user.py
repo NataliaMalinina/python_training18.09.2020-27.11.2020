@@ -173,4 +173,3 @@ class UserHelper:
         work = re.search("P: (.*)", text).group(1)
         return Parameters(home=home, mobile=mobile, work=work, phone2=phone2)
 
-
