@@ -173,3 +173,32 @@ class UserHelper:
         work = re.search("P: (.*)", text).group(1)
         return Parameters(home=home, mobile=mobile, work=work, phone2=phone2)
 
+    def add_in_group(self, id, name_group):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_xpath("//select[@name='to_group']/option[text()='%s']" % name_group.name).click()
+        wd.find_element_by_xpath("//input[@value='Add to']").click()
+        self.open_home_page()
+
+    def delete_of_group(self, name_group):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group.name).click()
+        if element in wd.find_elements_by_name("entry"):
+            element.find_elements_by_tag_name("td")
+            wd.find_element_by_name("selected[]").click()
+            wd.find_element_by_xpath("//input[@name='remove']").click()
+            wd.switch_to_alert().accept()
+        else:
+            wd.find_element_by_xpath("//select[@name='group']/option[value()='all']").click()
+            self.open_home_page()
+
+
+
+
+
+
+
+
+

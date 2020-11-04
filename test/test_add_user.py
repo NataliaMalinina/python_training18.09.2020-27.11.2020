@@ -2,6 +2,7 @@
 from model.params_for_user import Parameters
 
 
+
 def test_add_user(app, db, json_users, check_ui):
     user = json_users
     old_user = db.get_user_list()
