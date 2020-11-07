@@ -1,13 +1,11 @@
 import re
+from model.params_for_user import Parameters
 
 
-def test_all_fields_for_user(app):
-    user_from_home_page = app.user.get_user_list()[0]
-    user_from_edit_page = app.user.get_user_info_from_edit_page(0)
-    assert user_from_home_page.firstname == clear(user_from_edit_page.firstname)
-    assert user_from_home_page.lastname == clear(user_from_edit_page.lastname)
-    assert user_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(user_from_edit_page)
-    assert user_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(user_from_edit_page)
+def test_all_fields_for_user(app, db):
+    user_spisok_from_main_page = app.user.get_user_list()
+    user_spisok_from_db = db.get_user_list()
+    assert sorted(user_spisok_from_main_page, key=Parameters.id_or_max) == user_spisok_from_db
 
 
 def clear(s):

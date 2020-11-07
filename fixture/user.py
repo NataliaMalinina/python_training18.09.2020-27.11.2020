@@ -127,7 +127,6 @@ class UserHelper:
         wd = self.app.wd
         if text is not None:
             Select(wd.find_element_by_name(field_name)).select_by_value(text)
-
     user_cache = None
 
     def get_user_list(self):
@@ -139,13 +138,15 @@ class UserHelper:
                 cells = element.find_elements_by_tag_name("td")
                 firstname = cells[2].text
                 lastname = cells[1].text
+                address = cells[3].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 all_phones = cells[5].text
                 all_emails = cells[4].text
-                self.user_cache.append(Parameters(firstname=firstname, lastname=lastname, id=id,
-                                                  all_phones_from_home_page=all_phones,
+                self.user_cache.append(Parameters(firstname=firstname, lastname=lastname, address=address,
+                                                  id=id, all_phones_from_home_page=all_phones,
                                                   all_emails_from_home_page=all_emails))
-        return list(self.user_cache)
+        return list(filter(None, self.user_cache))
+
 
     def get_user_info_from_edit_page(self, index):
         wd = self.app.wd
@@ -170,7 +171,7 @@ class UserHelper:
         home = re.search("H: (.*)", text).group(1)
         mobile = re.search("M: (.*)", text).group(1)
         work = re.search("W: (.*)", text).group(1)
-        work = re.search("P: (.*)", text).group(1)
+        phone2 = re.search("P: (.*)", text).group(1)
         return Parameters(home=home, mobile=mobile, work=work, phone2=phone2)
 
     def add_in_group(self, id, name_group):
