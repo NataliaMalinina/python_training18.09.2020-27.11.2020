@@ -1,7 +1,7 @@
 import pymysql.cursors
 from model.group import Group
 from model.params_for_user import Parameters
-
+from model.users_in_groups import Users_in_groups
 
 class DbFixture:
 
@@ -52,6 +52,18 @@ class DbFixture:
         finally:
             cursor.close()
         return list(filter(None, r))
+
+    def get_users_in_groups(self):
+        cursor = self.connection.cursor()
+        list = []
+        try:
+            cursor.execute("select id, group_id from address_in_groups where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                (id, group_id) = row
+                list.append(Users_in_groups(id=str(id), group_id=str(group_id)))
+        finally:
+            cursor.close()
+        return list
 
     def destroy(self):
         self.connection.close()

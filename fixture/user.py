@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import Select
 from model.params_for_user import Parameters
+from model.users_in_groups import Users_in_groups
 import re
 
 class UserHelper:
@@ -174,15 +175,15 @@ class UserHelper:
         phone2 = re.search("P: (.*)", text).group(1)
         return Parameters(home=home, mobile=mobile, work=work, phone2=phone2)
 
-    def add_in_group(self, id, name_group):
+    def add_in_group(self, user_id, group_id):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_css_selector("input[value='%s']" % id).click()
-        wd.find_element_by_xpath("//select[@name='to_group']/option[text()='%s']" % name_group.name).click()
+        wd.find_element_by_css_selector("input[value='%s']" % user_id).click()
+        wd.find_element_by_xpath("//select[@name='to_group']/option[@value='%s']" % group_id).click()
         wd.find_element_by_xpath("//input[@value='Add to']").click()
         self.open_home_page()
 
-    def delete_of_group(self, name_group):
+    def delete_from_group(self, name_group):
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group.name).click()
@@ -195,6 +196,17 @@ class UserHelper:
             wd.find_element_by_xpath("//select[@name='group']/option[text()='[all]']").click()
             self.open_home_page()
 
+    def user_exist_in_group(self, name_group):
+        wd = self.app.wd
+        self.open_group_with_users(name_group)
+        user_id = wd.find_element_by_name("selected[]").get_attribute("value")
+        select_group = wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group).click()
+        group_id = wd.find_element_by_name("%s % name_group").get_attribute("value")
+        return Users_in_groups(id=user_id, group_id=group_id)
+
+    def open_group_with_users(self, name_group):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group).click()
 
 
 
