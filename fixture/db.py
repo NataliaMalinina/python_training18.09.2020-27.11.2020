@@ -24,12 +24,12 @@ class DbFixture:
             cursor.close()
         return list
 
-    def get_user_list(self):
+    def get_user_list(self, order='asc'):
         cursor = self.connection.cursor()
         list = []
         try:
-            cursor.execute("select id, firstname, middlename, lastname, address, home, mobile, email "
-                           "from addressbook where deprecated='0000-00-00 00:00:00'")
+            cursor.execute(f"select id, firstname, middlename, lastname, address, home, mobile, email "
+                           f"from addressbook where deprecated='0000-00-00 00:00:00' order by id {order}")
             for row in cursor:
                 (id, firstname, middlename, lastname, address, home, mobile, email) = row
                 list.append(Parameters(id=str(id), firstname=firstname, middlename=middlename,
@@ -61,6 +61,19 @@ class DbFixture:
             for row in cursor:
                 (id, group_id) = row
                 list.append(Users_in_groups(id=str(id), group_id=str(group_id)))
+        finally:
+            cursor.close()
+        return list
+
+    def get_groups_for_user(self, id):
+        cursor = self.connection.cursor()
+        list = []
+        try:
+            cursor.execute(f"select group_id from address_in_groups where deprecated='0000-00-00 00:00:00' "
+                           f"and id = {id}")
+            for row in cursor:
+                group_id = row
+                list.append(*group_id)
         finally:
             cursor.close()
         return list

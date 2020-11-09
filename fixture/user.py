@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import Select
 from model.params_for_user import Parameters
-from model.users_in_groups import Users_in_groups
 import re
+from selenium.webdriver.common.by import By
 
 class UserHelper:
 
@@ -183,35 +183,17 @@ class UserHelper:
         wd.find_element_by_xpath("//input[@value='Add to']").click()
         self.open_home_page()
 
-    def delete_from_group(self, name_group):
+    def delete_from_group(self, group_id):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group.name).click()
-        if wd.find_elements_by_name("entry"):
-            wd.find_elements_by_tag_name("td")
+        dropdown = Select(wd.find_element(By.NAME, 'group'))
+        dropdown.select_by_value('%s' % group_id)
+        #wd.find_element_by_xpath("//select[@name='to_group']/option[@value='%s']" % str(group_id)).click()
+        if wd.find_elements_by_name('entry'):
+            wd.find_element_by_tag_name("td")
             wd.find_element_by_name("selected[]").click()
             wd.find_element_by_xpath("//input[@name='remove']").click()
             wd.switch_to_alert().accept()
         else:
             wd.find_element_by_xpath("//select[@name='group']/option[text()='[all]']").click()
             self.open_home_page()
-
-    def user_exist_in_group(self, name_group):
-        wd = self.app.wd
-        self.open_group_with_users(name_group)
-        user_id = wd.find_element_by_name("selected[]").get_attribute("value")
-        select_group = wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group).click()
-        group_id = wd.find_element_by_name("%s % name_group").get_attribute("value")
-        return Users_in_groups(id=user_id, group_id=group_id)
-
-    def open_group_with_users(self, name_group):
-        wd = self.app.wd
-        wd.find_element_by_xpath("//select[@name='group']/option[text()='%s']" % name_group).click()
-
-
-
-
-
-
-
-
