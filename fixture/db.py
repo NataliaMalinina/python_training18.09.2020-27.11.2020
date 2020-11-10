@@ -28,30 +28,18 @@ class DbFixture:
         cursor = self.connection.cursor()
         list = []
         try:
-            cursor.execute(f"select id, firstname, middlename, lastname, address, home, mobile, email "
+            cursor.execute(f"select id, firstname, middlename, lastname, address, home, mobile, work, phone2, "
+                           f"email, email2, email3 "
                            f"from addressbook where deprecated='0000-00-00 00:00:00' order by id {order}")
             for row in cursor:
-                (id, firstname, middlename, lastname, address, home, mobile, email) = row
+                (id, firstname, middlename, lastname, address, home, mobile, work, phone2, email,
+                                                                                    email2, email3) = row
                 list.append(Parameters(id=str(id), firstname=firstname, middlename=middlename,
-                                        lastname=lastname, address=address, home=home, mobile=mobile, email=email))
+                                        lastname=lastname, address=address, home=home, mobile=mobile, work=work,
+                                       phone2=phone2, email=email, email2=email2, email3=email3))
         finally:
             cursor.close()
         return list
-
-    def get_user_list_for_sr(self):
-        cursor = self.connection.cursor()
-        r = []
-        try:
-            cursor.execute("select id, firstname, lastname, address, home, mobile, work, phone2, email "
-                           "from addressbook where deprecated='0000-00-00 00:00:00'")
-            for row in cursor:
-                (id, firstname, lastname, address, home, mobile, work, phone2, email) = row
-                list.append(Parameters(id=str(id), firstname=firstname, lastname=lastname,
-                                       address=address, home=home, mobile=mobile, work=work, phone2=phone2,
-                                       email=email))
-        finally:
-            cursor.close()
-        return list(filter(None, r))
 
     def get_users_in_groups(self):
         cursor = self.connection.cursor()
@@ -80,4 +68,24 @@ class DbFixture:
 
     def destroy(self):
         self.connection.close()
+
+
+    # def get_user_by_id(self, id):
+    #     cursor = self.connection.cursor()
+    #     try:
+    #         cursor.execute(f"select id, firstname, lastname, address, home, mobile, work, phone2, email,"
+    #                        f"email2, email3 from addressbook where deprecated='0000-00-00 00:00:00' "
+    #                        f"and id = {id} limit 1")
+    #         for row in cursor:
+    #             (id, firstname, lastname, address, home, mobile, work, phone2, email, email2, email3) = row
+    #             user = Parameters(id=str(id), firstname=firstname, lastname=lastname,
+    #                                        address=address, home=home, mobile=mobile, work=work, phone2=phone2,
+    #                                        email=email, email2=email2, email3=email3)
+    #     finally:
+    #         cursor.close()
+    #         return user
+
+    def destroy(self):
+        self.connection.close()
+
 

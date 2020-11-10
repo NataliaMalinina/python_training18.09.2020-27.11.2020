@@ -148,7 +148,6 @@ class UserHelper:
                                                   all_emails_from_home_page=all_emails))
         return list(filter(None, self.user_cache))
 
-
     def get_user_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_user_to_edit_by_index(index)
