@@ -1,5 +1,26 @@
 {
   "uid" : "4b4757e66a1912dae1a509f688f20b0f",
   "name" : "categories",
-  "children" : [ ]
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "selenium.common.exceptions.NoAlertPresentException: Message:",
+      "children" : [ {
+        "name" : "test_del_user_of_group",
+        "uid" : "b7893b68dbe9ffb4",
+        "parentUid" : "2d45f1215edd27a3fc7ee4f526ab9061",
+        "status" : "broken",
+        "time" : {
+          "start" : 1605980153378,
+          "stop" : 1605980154855,
+          "duration" : 1477
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "2d45f1215edd27a3fc7ee4f526ab9061"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ]
 }
