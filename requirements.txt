@@ -22,3 +22,5 @@ six==1.15.0
 toml==0.10.1
 urllib3==1.25.10
 zipp==3.1.0
+lxml-4.6.1-cp37-cp37m-win_amd64
+allure-pytest
