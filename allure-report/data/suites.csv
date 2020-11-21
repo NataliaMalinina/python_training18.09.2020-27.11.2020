@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Nov 21 21:22:39 NOVT 2020","Sat Nov 21 21:22:41 NOVT 2020","2672","test","test_add_address_group","","","","test_address_group[None:namedX>cc;header!*|: Yk2Nnlv p b_;footerXuN]",""
+"passed","Sat Nov 21 21:22:35 NOVT 2020","Sat Nov 21 21:22:38 NOVT 2020","3467","test","test_add_address_group","","","","test_address_group[None:name,)7E;headerH-;footerZ> b 28m}]",""
+"passed","Sat Nov 21 21:22:26 NOVT 2020","Sat Nov 21 21:22:28 NOVT 2020","2072","test","test_add_address_group","","","","test_address_group[None:;;]",""
+"passed","Sat Nov 21 21:22:28 NOVT 2020","Sat Nov 21 21:22:30 NOVT 2020","1431","test","test_add_address_group","","","","test_address_group[None:name1~;AL3*Q;header9TJ#) H#wm.A 9Rjf;footerpUl HD]",""
+"passed","Sat Nov 21 21:22:32 NOVT 2020","Sat Nov 21 21:22:35 NOVT 2020","2891","test","test_add_address_group","","","","test_address_group[None:name/3c q;headerF4B<A| j=vnI Ye;footerq*q)]",""
+"passed","Sat Nov 21 21:22:30 NOVT 2020","Sat Nov 21 21:22:32 NOVT 2020","2290","test","test_add_address_group","","","","test_address_group[None:name+es;headerc aH!,/{#9rm K U;footerVtyB 8 oai]",""
